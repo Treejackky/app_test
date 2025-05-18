@@ -7,7 +7,7 @@ app.use(express.json());
 
 // Routes
 app.get('/', (req, res) => {
-  res.send('Hello, Node.js from VS Code!');
+  res.send('Hello, Node.js from VS Code! GGEZ');
 });
 
 // Server start
