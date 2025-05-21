@@ -1,18 +1,16 @@
+# Use official Node.js image
 FROM node:18-alpine
 
-# Set the working directory and change its ownership to the non-root user
-WORKDIR /usr/src/app
+# Set working directory
+WORKDIR /app
 
-# Copy and install dependencies
+# Copy dependencies and install
 COPY package*.json ./
-RUN npm ci --only=production --ignore-scripts && npm rebuild sharp
+RUN npm install --production
 
-# Copy the application source code
+# Copy source code
 COPY . .
 
-# Set environment variables and expose the port
-ENV PORT=3000
+# Expose port and run the app
 EXPOSE 3000
-
-# Switch to the non-root user and start the application
-CMD ["npm", "run", "prod"]
+CMD ["node", "app.js"]
