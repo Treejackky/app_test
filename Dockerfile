@@ -2,7 +2,7 @@
 FROM node:18-alpine
 
 # Set working directory
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Copy dependencies and install
 COPY package*.json ./
@@ -13,4 +13,4 @@ COPY . .
 
 # Expose port and run the app
 EXPOSE 3000
-CMD ["node", "app.js"]
+CMD ["node", "index.js"]
