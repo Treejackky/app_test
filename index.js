@@ -6,8 +6,14 @@ const app = express();
 app.use(express.json());
 
 // Routes
-app.get('/', (req, res) => {
-  res.send('Hello, Node.js from VS Code! GGEZ');
+app.get('/', async (req, res) => {
+  console.log('Request received, waiting 90 seconds...');
+  
+  // รอ 90 วินาที (90,000 มิลลิวินาที)
+  await new Promise(resolve => setTimeout(resolve, 90000));
+  
+  console.log('90 seconds passed, sending response...');
+  res.send('Hello, Node.js from VS Code! GGEZ (after 90 seconds delay)');
 });
 
 // Server start
