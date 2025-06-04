@@ -1,4 +1,3 @@
-// index.js
 const express = require('express');
 const app = express();
 
@@ -7,13 +6,32 @@ app.use(express.json());
 
 // Routes
 app.get('/', async (req, res) => {
-  console.log('Request received, waiting 90 seconds...');
-  
-  // รอ 90 วินาที (90,000 มิลลิวินาที)
-  await new Promise(resolve => setTimeout(resolve, 90000));
-  
-  console.log('90 seconds passed, sending response...');
-  res.send('Hello, Node.js from VS Code! GGEZ (after 90 seconds delay)');
+  try {
+    const startTime = Date.now();
+    let secondsElapsed = 0;
+
+    // สร้าง interval สำหรับ log ทุกวินาที
+    const logInterval = setInterval(() => {
+      secondsElapsed = Math.floor((Date.now() - startTime) / 1000);
+      console.log(`Waiting... ${secondsElapsed} seconds elapsed`);
+    }, 1000);
+
+    // รอ 90 วินาที
+    await new Promise(resolve => setTimeout(resolve, 90000));
+
+    // หยุด interval เมื่อเสร็จแล้ว
+    clearInterval(logInterval);
+
+    const totalTime = Math.floor((Date.now() - startTime) / 1000);
+    console.log(`Completed! Total time: ${totalTime} seconds`);
+
+    res.send({
+      message: 'All Emails Have Been Sent',
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: 'Something went wrong' });
+  }
 });
 
 // Server start
